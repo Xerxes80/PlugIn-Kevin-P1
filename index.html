@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="assets/CSS/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,600|Special+Elite" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    
+    <title> Plug In </title>
+</head>
+<body>
+
+<!-- HEADER -->
+    
+<header class = "header">
+	<img src="assets/images/pluginlogowhite.png" id="logo"> 
+</header>
+    
+<!-- BODY -->
+
+<div class="main-container row">
+  <div class="col-sm-8"> 
+ 	 <div class = "event-section">
+		 <h4 id="findHead"> FIND AN EVENT </h4>
+         <!--Added By Kevin (start)-->
+         <div class="event-search">
+             
+             <form id="eventForm">
+                 <div class="row">
+                     <div class="eventSearchForm">
+                        <div class="col-md-6"> 
+                             <div class="form-group">
+                                <label for="venue-label">Venue</label>
+                                <input type="text" class="form-control" id="venue-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="radious-label">Radious (miles)</label>
+                                <input type="text" class="form-control" id="radious-input">
+                            </div>
+                           
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group">
+                                <label for="dateFrom-label">From :</label>
+                                <input type="date" class="form-control" id="dateFrom-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateTo-label">To :</label>
+                                <input type="date" class="form-control" id="dateTo-input" placeholder="mm/dd/yyyy">
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <button type="submit" class="btn btn-default" id="eventSearch-submit-Btn">Submit</button>
+            </form> 
+        </div>
+         <div class="resultsPart">
+             <div class="row">
+                <div class="col-sm-12">
+                    <br>
+                    <div class="panel-body" id="well-section"></div>
+                </div>
+            </div>
+         </div>
+         <!--Added By Kevin (End)-->
+      </div>
+  </div>
+    <div class="custom-container col-sm-4">
+	<!-- ADD YOUR OWN EVENT FORM-->
+                    <!--Classes and ids names changed by kevin--> 
+        <div class="addEvent" id = "addEvent">
+            <h4 id="rightHead"> ADD YOUR OWN EVENT </h4>
+            <form >
+                <div class="form-group">
+                    <label for="-label">Arist</label>
+                    <input type="text" class="form-control" id="clientEvent-artist-input">
+                </div>
+                <div class="form-group">
+                    <label for="venue-label">Venue</label>
+                    <input type="text" class="form-control" id="clientEvent-venue-input">
+                </div>
+                <div class="form-group">
+                    <label for="date-label">Date</label>
+                    <input type="date" class="form-control" id="clientEvent-date-input" placeholder="mm/dd/yyyy">
+                </div>
+
+                <button type="submit" class="btn btn-default" id="customEvent-submitButton">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br> <br> <br> <br> <br> <br> 
+
+
+
+
+
+<!-- FOOTER -->
+
+<nav class="navbar navbar-default navbar-fixed-bottom" id="footer">
+  <div class="container">
+    <p> FOOTER COPY HERE FOOTER COPY HERE </p>
+  </div>
+</nav>
+ <script src="assets/javascript/app.js"></script> 
+
+</body>
+
+</html>
+
+
