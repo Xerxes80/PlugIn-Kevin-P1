@@ -120,16 +120,6 @@ body {
 
 }
 
-#buddyImage {
-	border-radius: 50%;
-	width: 150px;
-	height: 150px; 
-	background-image: url("https://www.dynalite.com/wp-content/uploads/2014/01/Frankie-Leal-Headshot.jpg");
-	background-size:cover;
-	margin-top: .5%;
-	margin-left:5.5%;
-	border: 2px solid #7FFFD4;
-}
 }
 
 .thumbnailMe {
@@ -164,27 +154,23 @@ body {
 }
 
 /* Added By Kevin ( Event Search ) */
-
 .event-section {
 	width: 90%;
     margin:0 5% 0 5%;
 }
-
 #eventSearch-submit-Btn{
     border: 3px solid #7FFFD4;
 	font-family: 'Raleway', sans-serif;
 }
 .addEvent {
 	width: 90%;
-    margin: 0 10px;
+    margin: 0 5%;
 }
 .custom-container {
 	width: 90%;
-    
 }
 .well {
-    height: 500px;
-   
+    height: auto;
 }
 .panel-body a{
 	word-break: break-all;
@@ -192,3 +178,44 @@ body {
 .titleBar{
     height: 40px;
 }
+.locationHolder{
+    padding: 10px;
+}
+.dateHolder{
+    padding: 10px;
+}
+.linkHolder{
+    justify-content: center;
+}
+.imageHolder{
+    height: 150px;
+    padding: 10px;
+}
+.descriptionHolder{
+    padding: 10px;
+}
+#map {
+    height: 300px;
+    width: 100%;
+    border: 1px solid dimgrey;
+}
+.event-main-container {
+  overflow: auto;
+
+}
+.event-select-section {
+    margin: 0 20px ;
+    padding: 10px;
+	
+}
+.map-section {
+    margin: 10px 20px;
+    padding: 10px;
+}
+.event-select-display {
+	background-color: chocolate;
+    padding: 10px;
+}
+
+
+

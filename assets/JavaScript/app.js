@@ -8,12 +8,18 @@ var config = {
 firebase.initializeApp(config);
 var dataRef = firebase.database();
 
-
 var person = {
     name : "",
     email : 0,
     phone : 0,
-    city :""
+    city :"",
+    events :""
+};
+
+var event = {
+    id : 0,
+    latitude:0,
+    longtitude:0
 };
 
 var customEvent = {
@@ -21,42 +27,22 @@ var customEvent = {
     venue : "",
     date : ""
 };
+var personkey = "";
+var latitude = 0;
+var longtitude = 0;
+var theResult ="";
 
 //========================== Retriving Data From DataBase ====================
 
-//dataRef.ref().on("child_added", function(childSnapshot) {
-//
-//      
-//     
-////      $("#full-member-list").append("<div class='well'><span id='name'> " + childSnapshot.val().name +
-////        " </span><span id='email'> " + childSnapshot.val().email +
-////        " </span><span id='age'> " + childSnapshot.val().age +
-////        " </span><span id='comment'> " + childSnapshot.val().comment + " </span></div>");
-////
-////    // Handle the errors
-//    }, function(errorObject) {
-//      //console.log("Errors handled: " + errorObject.code);
-//    });
 
-//============================= Sign-Up Input Validator ================================
-//jQuery.validator.setDefaults({
-//  debug: true,
-//  success: "valid"
-//});
-//$( "#signUpForm" ).validate({
-//    rules: {
-//        emailInput : {
-//            required: true,
-//            email: true
-//        }                     
-//    }
-//});
+
+
+
 //============================= SignUp Function =============================
 $("#signUpButton").on("click", function() {
-        $("#signUpButton").hide();
-        $("#signUpForm").css("opacity", "1");
-
- });
+    $("#signUpButton").hide();
+    $("#signUpForm").css("opacity", "1");
+});
 
 $("#submit").on("click", function(event) {
     event.preventDefault();
@@ -70,12 +56,19 @@ $("#submit").on("click", function(event) {
         name:   person.name,
         email:  person.email,
         phone:  person.phone,
-        city:   person.city
+        city:   person.city,
+        event:  ""
     }); //-----CLOSE PUSH ----
+    
     location.href = "index.html";
    // window.location.href = "index.html";
 });//-----CLOSE SUBMIT -------
 
+var addedPerson = dataRef.ref("persons/");
+    addedPerson.on("child_added", function(data){
+    personkey = data.key; 
+});
+    
 //============================== Client Event Input ==========================
 
 $("#customEvent-submitButton").on("click", function(event){
@@ -99,32 +92,29 @@ $("#eventSearch-submit-Btn").on("click", function(event){
     event.preventDefault();
 
     var venue = $("#venue-input").val().trim();
+    var category = $("#category-input").val().trim();
     var distance = $("#radious-input").val().trim();
-    var startYear = $("#dateFrom-input").val().trim();
-    var endYear = $("#dateTo-input").val().trim();
+    var date = $("#select").val().trim();
     $(".event-search").hide();
     $("#findHead").text("TOP RESULTS");
-
-    ///================================ search result page change ================
+//================================ search result page change ================
     var articleCounter = 0;
-
+    var results = 0;
+    var resultSize = 0;
+    var resultPage = 0;
+    var floor = 0;
     $("#well-section").empty();
 
-  
-
-    ///===========================================================================
-
      var apiKey = "tpx4FM5B5ftptgTf";
-     var queryURL = 
-        "http://api.eventful.com/json/events/search"
-
+     var queryURL = "http://api.eventful.com/json/events/search";
+    
      queryURL += '?' + $.param ({
         'app_key': apiKey,
-        'q': "music",
+        'q': category,
         'location': venue,
         'within': distance,
-        'date':  "Next week",
-        'page_size': 10,
+        'date':  date,
+        'page_size': 200,
         'sort_order': "relevance"
      });
 
@@ -133,88 +123,168 @@ $("#eventSearch-submit-Btn").on("click", function(event){
         method: "GET", 
         dataType: "jsonp" 
      }).done(function(response) {
-
-         var results = response.events;
-
-         console.log(results);
-         console.log(results.event[0].postal_code);         
-         console.log(results.event[0].title);
-
-         for(var i =0 ; i< results.event.length; i++){
-
-        //--------------------
-        articleCounter=i;
-
-        //---------------
-             
-        //=============
-             
-        var wellSection = $("<div>");
-        wellSection.addClass("well col-md-4 col-sm-6 col-xs-8");
-        wellSection.attr("id", "article-well-" + articleCounter);
-             
-            // =============
-         $("#well-section").append(wellSection);
-         $("#article-well-" + articleCounter).append("<div class='titleBar'><h5 >"+results.event[i].title+"</h5></div><br>");
-
-         if(results.event[i].image !== null){
-            var images = results.event[i].image.medium.url;
-            // var descriptions = results.event[i].description;
-            console.log(images);
-            $("#article-well-" + articleCounter).append("<div><img src='"+images+"'></div>");
-            // $(".resultsPart").append(resultDiv);
-         }else{
-            $("#article-well-" + articleCounter).append("<div><img height = 128px width=128px src=assets/images/defaultImg.png></div>");
-         }
-          
-         if(results.event[i].venue_name !== null){
-            var locationName = results.event[i].venue_name;
-         }else{
-             locationName="";
-         }
-         if(results.event[i].city_name !== null){
-            var locationCity = results.event[i].city_name;
-         }else{
-             locationCity="";
-         }
-         if(results.event[i].postal_code !== null){
-        var locationZipCode = results.event[i].postal_code;
-         }else{
-             locationZipCode ="";
-         }
-         if(results.event[i].region_name !== null){
-        var locationRegion = results.event[i].region_name;
-         }else{
-             locationRegion ="";
-         }
-         if(results.event[i].start_time !== null){
-        var DateTime = results.event[i].start_time;
-             $("#article-well-" + articleCounter).append("<br><div class='dateTime'>Date & Time : <div>"+DateTime+"</div></div>");
-         }
-             
-         $("#article-well-" + articleCounter).append("<br><div class='locCity'>location : <div>"+locationName+"<br>"+locationCity+" "+locationZipCode+", "+locationRegion+"</div></div>");
-             
-         $("#article-well-" + articleCounter).append("<br><div class='eventFull'><a href='"+results.event[i].url+"' target='_blank'>More Information <br>& Buy Tickets</a><div><br>");    
-        
-         $("#article-well-" + articleCounter).append("<div class='selectEvent'><button class='btn btn-default' type='button'>Select This Event</button><div><br>");
          
-      
-             
-             
-             
-             
-             
-//            $("#article-well-" + articleCounter).append("<div><br><button class='btn btn-default' type='button'  id=>Show Description</button></div><div class='well'>"+results.event[i].description+"</div></div>"); 
-//             
-             
-             
-//            $("#article-well-" + articleCounter).append( "<div><br><button class='btn btn-primary' type='button' data-toggle='collapse.in' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample'>"+"Show Description"+"</button><div class='collapse' id='collapseExample'><div class='well'>"+"hgashagsfhjgszxc zhxc"+"</div></div></div>");
+            results = response.events;
+            theResult = results;
+            resultPage = Math.ceil(results.event.length/10);
+            resultSize = results.event.length;
+            
+//=================== Populating Page with resultDisplay function 
          
-             
-             
-             
-         }
+            resultDisplay(results, floor);
          
-    });
+//===================== providing Event Page Selector Btns at the end of the dispaly section 
+         
+            if(resultSize > 10){
+                for(var i = 1 ; i <= resultPage ; i++){
+                    var btnSection = $("<button>");
+                    btnSection.addClass("btn btn-default btnG");
+                    btnSection.attr("id", "btn-" + i);
+                    btnSection.attr("type", "radio");
+                    btnSection.attr("autocomplete", "off");
+                    btnSection.val(i);
+                    btnSection.text(i);
+                    $(".btn-group").append(btnSection);
+                }
+            }
+//===================== Event Page Selector Btns Behavior ===================
+         
+            $(document).on("click", ".btnG", function() {
+                for(var i = 1; i <= resultPage; i++){
+                    $(".btnG").removeClass("active");
+                }
+                    $(this).addClass("active");
+                    var ceilIndex = $(this).val();
+                    floor = (ceilIndex*10)-10;
+                    console.log(floor);
+                    $("#well-section").empty();
+                    resultDisplay(results, floor);
+                });
+        });
 });
+
+//===================== Select Event Button Function =============
+
+$(document).on("click", "#selectEventBtn", function() {
+    console.log($(this).val());
+    var eventCounter = $(this).val();
+    addEvent(theResult, eventCounter);
+    location.href = "event.html"; 
+    
+});
+//===================== Adding event to FireBase Data Function ====
+function addEvent(theResult, eventCounter){
+    
+    var upd = dataRef.ref().child("persons/"+personkey);
+    upd.update({
+        "event" : theResult.event[eventCounter]
+    });
+}  
+//===================== Result Display ============================
+
+function resultDisplay(results, floor){
+
+    
+    var ceil = floor+9;
+
+    console.log(results);
+    console.log(results.event[0].postal_code);         
+    console.log(results.event[0].title);
+
+    if(results.event.length < 10){
+        ceil = results.event.length; 
+    }
+    if(results.event.length < ceil){
+        ceil = results.event.length;
+    }
+
+    for(var i = floor ; i < ceil ; i++){
+        articleCounter=i;
+        if(results.event[i].title !== null){
+            var title = results.event[i].title;
+        }else{
+            var title = "No Title";
+        }
+        if(results.event[i].image !== null){
+            var images = results.event[i].image.medium.url;
+        }else{
+            var images = "assets/images/defaultEvent1.png";
+        }
+        if(results.event[i].venue_name !== null){
+            var locationName = results.event[i].venue_name;
+        }else{
+            locationName="";
+        }
+        if(results.event[i].city_name !== null){
+            var locationCity = results.event[i].city_name;
+        }else{
+            locationCity="";
+        }
+        if(results.event[i].postal_code !== null){
+            var locationZipCode = results.event[i].postal_code;
+        }else{
+            locationZipCode ="";
+        }
+        if(results.event[i].region_name !== null){
+            var locationRegion = results.event[i].region_name;
+        }else{
+            locationRegion ="";
+        }
+        var location = "<div>Location : <br>"+locationName+"<br>"+locationCity+", "+locationRegion+locationZipCode+"</div>";
+
+        if(results.event[i].latitude !== null && results.event[i].longitude !== null){
+            var lat = results.event[i].latitude;
+            var long = results.event[i].longitude;
+//            console.log(lat);
+//            console.log(long);
+        }else{
+            lat = "";
+            long = "";
+        }  
+        if(results.event[i].start_time !== null){
+            var dateTime = results.event[i].start_time; 
+        }else{
+            dateTime = "";
+        }
+        if(results.event[i].url !== null){
+            var websiteUrl = "<div class='eventFull'><a href='"+results.event[i].url+"' target='_blank'>More Information <br>& Buy Tickets</a><div>";
+        }else{
+            var websiteUrl = "";
+        }   
+        if(results.event[i].description !== null){
+            var description = results.event[i].description;
+        }else{
+            var description = "No Data Is Available";
+        }
+        var wellSection = $("<div>");
+        wellSection.addClass("well col-xs-12");
+        wellSection.attr("id", "article-well-" + articleCounter);
+        $("#well-section").append(wellSection);   
+        $("#article-well-" + articleCounter).append("<div class='test col-xs-12'><h4>"+title+"</h4></div>"); 
+        if(results.event[i].image !== null){
+            $("#article-well-" + articleCounter).append("<div class='imageHolder col-xs-6 col-sm-4'><img src='"+images+"'></div>"); 
+        }else{
+            $("#article-well-" + articleCounter).append("<div class='imageHolder col-xs-6 col-sm-4'><img height = 128px width=128px src="+images+"></div>");
+        } 
+        $("#article-well-" + articleCounter).append("<div class='locationHolder col-xs-6 col-sm-4'>"+location+"</div>");
+        $("#article-well-" + articleCounter).append("<div class='dateHolder col-xs-6 col-sm-4'>Date & Time : <br>"+dateTime+"</div>");
+        $("#article-well-" + articleCounter).append("<div class='linkHolder col-xs-6 col-sm-8'>"+websiteUrl+"</div>");    
+        $("#article-well-" + articleCounter).append("<div class='selectEvent col-xs-6 col-sm-12'><button class='btn btn-default' id='selectEventBtn' value='"+articleCounter+"' type='button'>Select This Event</button><div>"); 
+        $("#article-well-" + articleCounter).append("<div class='descriptionHolder col-xs-12'><strong>Description :</strong> <br>"+description+"</button><div>"); 
+    }
+}
+//===================== MAP =======================================
+
+function initMap() {
+    var uluru = {lat: latitude, lng: longtitude};
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: uluru
+    });
+    var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+    });
+}
+//===================== 
 
