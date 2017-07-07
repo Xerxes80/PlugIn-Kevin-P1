@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,116 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="assets/CSS/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Raleway:400,600|Special+Elite" rel="stylesheet">
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwReSyal9NCZ5hQ6AuEoyj6JVcqkO5mKY&callback">
-    </script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!--links added by kevin-->
+<!--
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+-->
+    <!--links added by kevin-->
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-    
-    <title> Plug In </title>
+    <title> Concert Buddy: Sign Up </title>
+</head>
     <script>
         window.onload = function() {
-      initApp2();
+      initApp();
     };
     </script>
-</head>
-<body >
+    
 
-<!-- HEADER -->
-    
-<header class = "header">
-	<img src="assets/images/pluginlogowhite.png" id="logo"> 
-</header>
-    
+<body class="signup-body">
+
 <!-- BODY -->
-<div class="account-bar">
-    <span class="signOutLink" id="quickstart-sign-out" name="signin" display="none">Sign out</span>
+  
+<!-- Sign Up Button -->
+<button class="btn btn-default btn-lg center-block" id="plugInButton"> 
+    <img src="assets/images/pluginlogoblack.png" id="plugInLogo">
+</button>
+<div class="signing-section text-center">
+<!-- Sign Up/In Form -->
+    <div class="signingForms center-block row">
+        <div class="center-block col-12" id = "signUpForm">
+            <div class=" col-sm-6">
+                <br>
+                <div class="headTag">Create An Account</div>
+                <br>
+                <input type="name" class="forms" id="signUpName" placeholder="Name">
+                <h5 class="errors" id="nameError"></h5>
+                <br>
+                <input type="email" class="forms" id="signUpEmail" placeholder="Email">
+                <h5 class="errors" id="usernameError"></h5>
+                <br>
+                <input type="password" class="forms" id="signUpPass" placeholder="Password">
+                <br>
+                <h5 class="errors" id="passwordError"></h5>
+                <br>
+                <button class="btn btn-default" id="quickstart-sign-up" name="signup">Sign Up
+                </button>
+                <br><br>
+            </div>  
+        </div>
+        <div id = "signInForm" class="col-12">
+            <div class="col-sm-6">
+                <br>
+                <div class="headTag">Existing Account</div>
+                <br>
+                <input type="email" class="forms" id="signInEmail" placeholder="Email">
+                <h5 class="errors" id="inUsernameError"></h5>
+                <br>
+                <input type="password" class="forms" id="signInPass" placeholder="Password">
+                <br>
+                <h5 class="errors" id="inPasswordError"></h5>
+                <br>
+                <button class="btn btn-default" id="quickstart-sign-in" name="signin">Sign In 
+                </button>
+                
+                <br><br>
+            </div>  
+        </div> 
+    </div>
 </div>
-<div class="main-container row">
-    
-  <div class="col-md-8 col-xs-12"> 
- 	 <div class = "event-section">
-		 <h4 id="findHead"> FIND AN EVENT </h4>
-         <div class="event-search">
-             <form id="eventForm">
-                 <div class="row">
-                     <div class="eventSearchForm">
-                        <div class="col-md-6"> 
-                             <div class="form-group">
-                                <label for="venue-label">Venue</label>
-                                <input type="text" class="form-control" id="venue-input" placeholder="Ex. Dallas">
-                            </div>
-                            <div class="form-group">
-                                <label for="category-label">Event Type :</label>
-                                <input type="text" class="form-control" id="category-input" placeholder="Ex. Concerts">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                              <label for="select">When :</label>
-                              <select id="select" class="form-control">
-                                  <option>Today</option>
-                                  <option>This Week</option>
-                                  <option>Next Week</option>
-                                  <option>Future</option>
-                                  <option>All</option>
-                              </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="radious-label">Radious (miles)</label>
-                                <select id="radious-input" class="form-control" >
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>15</option>
-                                    <option>25</option>
-                                    <option>35</option>
-                                    <option>50</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
-                <button type="submit" class="btn btn-default" id="eventSearch-submit-Btn">Submit</button>
-            </form> 
-        </div>
-        <div class="resultsPart">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="well result-bar">
-                            <h4 class='col-xs-7' id="result-number"></h4>
-                            <button class='btn btn-default center-block' id='backToSearch' type='button'>
-                                Back to Search
-                            </button>
-                    </div>
-                    <div class="panel-body row" id="well-section"></div>
-                    <div class="btn-group" role="group" data-toggle="buttons" aria-label="btnGroup"></div>
-                </div>
-            </div>
-        </div>
-      </div>
-  </div>
-  <div class="custom-container col-md-4 col-xs-12">
-        <div class="addEvent" id = "addEvent">
-            <h4 id="rightHead">YOUR SELECTED EVENTS </h4>
-            <div class="eventSelectDisplay2" id="mainEventDisaplyList">
-                <div class="panel-body2 row" id="well-s2"></div>
-            </div>
-        </div>
-  </div>
-</div>
-<br><br><br><br><br><br>
-
 
 <!-- FOOTER -->
-
-<nav class="navbar navbar-default navbar-fixed-bottom" id="footer">
+<nav class="navbar navbar-default navbar-fixed-bottom" id="sFooter">
   <div class="container">
     <p> FOOTER COPY HERE FOOTER COPY HERE </p>
   </div>
 </nav>
-<script src="assets/javascript/app.js"></script> 
 
+<!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script src="assets/javascript/app.js"></script>
 </body>
 
 </html>

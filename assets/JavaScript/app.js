@@ -112,7 +112,7 @@ function initApp() {
             console.log(uid);
             console.log(providerData);
 
-            location.href = "index.html";
+            location.href = "search.html";
         }else {
           document.getElementById('quickstart-sign-in').textContent = 'Sign in';
           console.log("signed out");
@@ -151,7 +151,7 @@ function initApp2() {
             //  location.href = "index.html";
         }else {
           //document.getElementById('quickstart-sign-in').textContent = 'Sign in';
-            location.href = "signUp.html";
+            location.href = "index.html";
         };
         //document.getElementById('quickstart-sign-in').disabled = false;
     });
@@ -175,7 +175,7 @@ function initApp3() {
             showMap(userUId);
 
         }else {
-           location.href = "signUp.html";
+           location.href = "index.html";
         }
       });
       document.getElementById('quickstart-sign-out').addEventListener('click', toggleSignIn, false);
