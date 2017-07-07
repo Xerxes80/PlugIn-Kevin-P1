@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +7,14 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwReSyal9NCZ5hQ6AuEoyj6JVcqkO5mKY&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwReSyal9NCZ5hQ6AuEoyj6JVcqkO5mKY&callback">
+    </script>
+    <script>
+        window.onload = function() {
+      initApp3();
+    };
     </script>
     <title> Concert Buddy: Your Event </title>
 </head>
@@ -21,15 +25,18 @@
 <header class = "header">
     <img src="assets/images/pluginlogowhite.png" id="logo"> 
 </header>
-    
+<div class="account-bar">
+    <span class="signOutLink" id="quickstart-sign-out" name="signin" display="none">Sign out</span>
+</div>
 <div class="event-main-container">
     <div class="row">
         <div class="col-sm-6 col-md-7 col-lg-8">
             <div class="event-select-section">
-                <h4 id="rightHead">YOUR EVENTS</h4>
+                <h4 id="rightHead">YOUR EVENT</h4>
                 <div class="event-select-display">
-                    test
+                    
                 </div>
+                <br> <br>
             </div>
         </div>
         <div class="col-sm-6 col-md-5 col-lg-4">
@@ -37,6 +44,7 @@
                 <div id="map"></div>
             </div>
         </div>
+        <br> <br> <br> <br>
     </div>
 </div>
 
